@@ -19,11 +19,11 @@ try:
 
     productsql = """CREATE TABLE PRODUCTS(
                 Product_Id SERIAL PRIMARY KEY NOT NULL,
-                Campus CHAR(10) DEFAULT 'hr-rfe',
-                Name CHAR(50) NOT NULL,
+                Campus VARCHAR DEFAULT 'hr-rfe',
+                Name VARCHAR NOT NULL,
                 Slogan VARCHAR NOT NULL,
                 Description VARCHAR NOT NULL,
-                Category VARCHAR(50) NOT NULL,
+                Category VARCHAR NOT NULL,
                 Default_Price int NOT NULL,
                 Created_at timestamp DEFAULT CURRENT_TIMESTAMP,
                 Updated_at timestamp DEFAULT CURRENT_TIMESTAMP
@@ -57,7 +57,7 @@ try:
     stylessql = """CREATE TABLE STYLES(
                 Style_Id SERIAL PRIMARY KEY NOT NULL,
                 Product_Id INT NOT NULL, 
-                Name CHAR(50) NOT NULL,
+                Name VARCHAR NOT NULL,
                 Original_Price VARCHAR,
                 Sale_Price VARCHAR,
                 Default_Int INT NOT NULL
@@ -124,7 +124,7 @@ try:
     skussql = """CREATE TABLE SKUS(
                 Skus_Id SERIAL PRIMARY KEY NOT NULL,
                 Style_Id INT NOT NULL,
-                Size CHAR(50) NOT NULL,
+                Size VARCHAR NOT NULL,
                 Quantity VARCHAR NOT NULL
     )"""
 
