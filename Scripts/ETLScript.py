@@ -37,6 +37,8 @@ try:
         product_insert_script = 'INSERT INTO PRODUCTS (Product_Id, Name, Slogan, Description, Category, Default_Price) VALUES (%s, %s, %s, %s, %s, %s);'
         for row in csvreader:
             if count > 0:
+                if len(row) != 6: 
+                    print(row)
                 values.append((row[0], row[1], row[2], row[3], row[4], row[5]))
             count = 1
             if len(values) == 1000:
@@ -47,6 +49,7 @@ try:
             psycopg2.extras.execute_batch(cursor, product_insert_script, values, page_size=1000)
             del(values)
             values = []
+    cursor.execute("CREATE INDEX Product_Index ON PRODUCTS (Product_Id);")
 
     conn.commit()
     t1 = datetime.datetime.now()-t0
@@ -84,6 +87,7 @@ try:
             values = []
     conn.commit()
     t1 = datetime.datetime.now()-t0
+    cursor.execute("CREATE INDEX Style_Index ON STYLES (product_id);")
     print(t1, "Styles Table created successfully........")
 
     cursor.execute("DROP TABLE IF EXISTS FEATURES")
@@ -115,6 +119,7 @@ try:
             del(values)
             values = []
     t1 = datetime.datetime.now()-t0
+    cursor.execute("CREATE INDEX Feature_Index ON FEATURES (product_id);")
     print(t1, "Features Table created successfully........")
 
     conn.commit()
@@ -148,6 +153,7 @@ try:
             del(values)
             values = []
     t1 = datetime.datetime.now()-t0
+    cursor.execute("CREATE INDEX Skus_Index ON Skus (Style_Id);")
     print(t1, "Skus Table created successfully........")
 
     conn.commit()
@@ -170,7 +176,9 @@ try:
         values = []
         count = 0
         for row in csvreader:
-            if count > 0:
+            if count > 0: 
+                if len(row) != 4:
+                    print(row)
                 values.append((row[0], row[1], row[2], row[3]))
             count = 1
             if len(values) == 1000:
@@ -182,6 +190,8 @@ try:
             del(values)
             values = []
     t1 = datetime.datetime.now()-t0
+    cursor.execute("CREATE INDEX Photos_Index ON Photos (Style_Id);")
+    
     print(t1, "Photos Table created successfully........")
 
     conn.commit()
@@ -214,6 +224,7 @@ try:
             del(values)
             values = []
     t1 = datetime.datetime.now()-t0
+    cursor.execute("CREATE INDEX Related_Index ON RELATED (Current_product_id);")
     print(t1, "Related Table created successfully........")
     conn.commit()
 # Closing the connection

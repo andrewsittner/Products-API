@@ -79,8 +79,12 @@ const getProductsStyle = (req, res) => {
                                 }
                                 resultArray.push(resultObj)
                                 if (resultArray.length === length) {
+                                    let finalObj = {
+                                        "product_id": req.params.id,
+                                        results: resultArray
+                                    }
                                     res.status(200).json(
-                                        resultArray
+                                        finalObj
                                     )
                                 }
                             })
